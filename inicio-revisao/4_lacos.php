@@ -5,11 +5,11 @@ for ($i = 1; $i <=10; $i++) {
     echo "8 x $i = " .(8 * $i) . "<br>";
 }
 
-// While - (Enquanto) Contagem Regressiva
+// While - (Enquanto) Contagem regressiva
 echo "<br>";
 $n = 8;
 while ($n > 0) {
-    echo "$n <br>";
+    echo $n . "<br>";
     $n--;
 }
 

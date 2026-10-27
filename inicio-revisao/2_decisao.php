@@ -1,14 +1,13 @@
 <?php
 
-// Variáveis
-echo "Bota a pirra da sua nita prita: ";
-$nota = readline();
+// Variável
+$nota = 7.5;
 
-// Estrutura de Decisão
+// Estrutura de decisão (SE)
 if ($nota >= 7) {
-    echo "Aprovado, tu é o GOAT";
-} elseif ($nota >= 5) {
-    echo "Recuperação, meu Deus mano, seu bixa de merda, vai estudar";
+    echo "Aprovado";
+} elseif ($nota >=5) {
+    echo "Recuperação";
 } else {
-    echo "Reprovado. SE MATA AGORA";
+    echo "Reprovado";
 }

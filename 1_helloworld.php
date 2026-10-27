@@ -1,6 +1,6 @@
 <?php
 
-// Frase Inicial
-echo "Hello, World!";
+// Frase inicial
+echo "Olá, mundo!";
 
 ?>

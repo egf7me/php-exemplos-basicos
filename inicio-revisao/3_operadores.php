@@ -1,21 +1,24 @@
 <?php
 
+// Declaração das variáveis
 $idade = 19;
 $temDocumento = true;
 
-if ($idade >= 18 && $temDocumento) {
-    echo "Tira a carteira de motorista, meu chapa";
+// Condicional com operador (E)
+if ($idade >=18 && $temDocumento) {
+    echo "Pode tirar a carteira";
 } else {
-    echo "Volta pra escola seu menor de idade kkkkkkkkk";
+    echo "Não pode tirar a carteira";
 }
 
-// Declaração de variáveis
+// Declaração das variáveis
 $feriado = false;
 $fimDeSemana = true;
 
-// Condicional com Operador (OU)
-if ($feriado || $fimDeSemana) {
-    echo "\n Hoje é dia de descanso!";
+// Condicional com operador (OU)
+if ($feriado  || $fimDeSemana) {
+    echo "\nHoje não tem aula";
 } else {
-    echo "\n Hoje é dia de trabalho!";
+    echo "Não é feriado";
 }
+

@@ -1,13 +1,14 @@
 <?php
 
-// Definindo variáveis e passando valores
+// Criando 2 variáveis e passando os valores
 $a = 5;
 $b = 3;
 
-// Calculando a soma das variáveis
-
+// Cálculando soma
 $soma = $a + $b;
 
-// Exibindo o resultado da soma
-echo "A soma de A + B é: $soma";
+// Exibindo resultado
+// echo "A soma de a + b é: $soma";
+echo "A soma é: " . $soma;
+
 
