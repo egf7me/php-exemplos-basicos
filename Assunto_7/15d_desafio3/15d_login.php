@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 session_start();
 $erro = '';
 
@@ -11,46 +11,51 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!preg_match('/^#[0-9a-fA-F]{6}$/', $cor)) {
         $cor = '#ffffff';
     }
-    
-    $conn = new mysqli('localhost', 'root', '', 'exercicio');
 
-    if ($conn->connect_error) {
-        die('Falha na conexão: ' . $conn->connect_error);
+    $conn = null;
+    $stmt = null;
+    $loginValido = false;
+
+    try {
+        mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+        $conn = new mysqli('localhost', 'root', 'Senai@118', 'exercicio');
+
+        // Os ? são preenchidos com valores por bind_param.
+        $stmt = $conn->prepare(
+            'SELECT usuario FROM usuarios WHERE usuario = ? AND senha = ?'
+        );
+        $stmt->bind_param('ss', $usuario, $senha);
+        $stmt->execute();
+        $stmt->store_result();
+
+        if ($stmt->num_rows > 0) {
+            $stmt->bind_result($usuarioEncontrado);
+            $stmt->fetch();
+
+            session_regenerate_id(true);
+            $_SESSION['usuario'] = $usuarioEncontrado;
+            $_SESSION['cor'] = $cor;
+            $loginValido = true;
+        } else {
+            $erro = 'Usuário ou senha incorretos!';
+        }
+    } catch (mysqli_sql_exception $e) {
+        error_log('Erro no login do desafio 15d: ' . $e->getMessage());
+        $erro = 'Não foi possível acessar o banco de dados. Verifique se o MySQL está ligado, se o banco e a tabela existem e se as credenciais estão corretas.';
+    } finally {
+        if ($stmt instanceof mysqli_stmt) {
+            $stmt->close();
+        }
+
+        if ($conn instanceof mysqli) {
+            $conn->close();
+        }
     }
 
-    // Os ? são preenchidos com valores por bind_param.
-    $stmt = $conn->prepare(
-        'SELECT usuario FROM usuarios WHERE usuario = ? AND senha = ?'
-    );
-
-    if (!$stmt) {
-        die('Erro ao preparar a consulta: ' . $conn->error);
-    }
-
-    $stmt->bind_param('ss', $usuario, $senha);
-
-    if (!$stmt->execute()) {
-        die('Erro ao consultar o usuário: ' . $stmt->error);
-    }
-
-    $stmt->store_result();
-
-    if ($stmt->num_rows > 0) {
-        $stmt->bind_result($usuarioEncontrado);
-        $stmt->fetch();
-
-        session_regenerate_id(true);
-        $_SESSION['usuario'] = $usuarioEncontrado;
-        $_SESSION['cor'] = $cor;
-
+    if ($loginValido) {
         header('Location: 15d_perfil.php');
         exit();
     }
-
-    $erro = 'Usuário ou senha incorretos!';
-
-    $stmt->close();
-    $conn->close();
 }
 ?>
 <!DOCTYPE html>
@@ -88,4 +93,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </form>
 </body>
 </html>
-

@@ -25,7 +25,7 @@
         // Conexão com BD
         $servername = "Localhost";
         $username = "root";
-        $password = "";
+        $password = "Senai@118";
         $dbname = "exercicio";
 
         // Efetiva a conexão de fato
